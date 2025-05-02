@@ -162,8 +162,8 @@ elif menu == "Job Search Tracker":
         st.dataframe(pd.DataFrame(st.session_state.job_data))
 
 # Career Counseling Chatbot
-elif menu == "Career Counseling Chatbot":
-    st.header("🧠 Career Counseling Chatbot")
+elif menu == "Career Counselling Chatbot":
+    st.header("🧠 Career Counselling Chatbot")
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []
     for msg in st.session_state.chat_history:

@@ -7,7 +7,7 @@ from docx import Document
 import fitz  # PyMuPDF for PDF extraction
 
 # Load spaCy model from local folder
-LOCAL_SPACY_MODEL_PATH = os.path.join(os.path.dirname(__file__), "en_core_web_sm")
+LOCAL_SPACY_MODEL_PATH = os.path.join(os.path.dirname(__file__), "en_core_web_sm", "en_core_web_sm-3.8.0")
 nlp = spacy.load(LOCAL_SPACY_MODEL_PATH)
 
 # Access Cohere API Key from Streamlit secrets

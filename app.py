@@ -34,7 +34,7 @@ h2, .stHeader { color: #1b4f72; margin-top: 25px; }
 </style>
 """, unsafe_allow_html=True)
 
-st.title("🎯 Career Counseling Assistant")
+st.title("🎯 Career Counselling Assistant")
 
 menu = st.sidebar.selectbox("Choose a service", [
     "Resume Analyzer", "Mock Interview", "Career Planner",

@@ -15,7 +15,7 @@ cohere_api_key = st.secrets["COHERE_API_KEY"]
 co = cohere.Client(cohere_api_key)
 
 # Set Streamlit page configuration
-st.set_page_config(page_title="Career Counseling Assistant", layout="wide")
+st.set_page_config(page_title="Career Counselling Assistant", layout="wide")
 
 # Custom styling
 st.markdown("""
@@ -38,7 +38,7 @@ st.title("🎯 Career Counseling Assistant")
 
 menu = st.sidebar.selectbox("Choose a service", [
     "Resume Analyzer", "Mock Interview", "Career Planner",
-    "Resources Hub", "Job Search Tracker", "Career Counseling Chatbot"
+    "Resources Hub", "Job Search Tracker", "Career Counselling Chatbot"
 ])
 
 job_keywords = {

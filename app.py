@@ -4,24 +4,20 @@ import pandas as pd
 import spacy
 import os
 from docx import Document
-import fitz  # PyMuPDF
+import fitz  # PyMuPDF for PDF extraction
 
-# --- Load spaCy model with fallback ---
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    from spacy.cli import download
-    download("en_core_web_sm")
-    nlp = spacy.load("en_core_web_sm")
+# Load spaCy model from local folder
+LOCAL_SPACY_MODEL_PATH = os.path.join(os.path.dirname(__file__), "en_core_web_sm")
+nlp = spacy.load(LOCAL_SPACY_MODEL_PATH)
 
-# --- Load API key from Streamlit secrets ---
+# Access Cohere API Key from Streamlit secrets
 cohere_api_key = st.secrets["COHERE_API_KEY"]
 co = cohere.Client(cohere_api_key)
 
-# --- Set Page Config ---
+# Set Streamlit page configuration
 st.set_page_config(page_title="Career Counseling Assistant", layout="wide")
 
-# --- Custom Styling ---
+# Custom styling
 st.markdown("""
 <style>
 body, .stApp { background-color: #f5f9ff; font-family: 'Segoe UI', sans-serif; color: #333; }
@@ -38,28 +34,24 @@ h2, .stHeader { color: #1b4f72; margin-top: 25px; }
 </style>
 """, unsafe_allow_html=True)
 
-# --- App Title ---
 st.title("🎯 Career Counseling Assistant")
 
-# --- Sidebar Menu ---
 menu = st.sidebar.selectbox("Choose a service", [
     "Resume Analyzer", "Mock Interview", "Career Planner",
     "Resources Hub", "Job Search Tracker", "Career Counseling Chatbot"
 ])
 
-# --- Job Keywords ---
 job_keywords = {
     "Data Scientist": ["machine learning", "python", "pandas", "data analysis", "statistics"],
     "Web Developer": ["html", "css", "javascript", "react", "frontend", "backend"],
     "Digital Marketer": ["seo", "content", "email marketing", "analytics", "social media"]
 }
 
-# --- Helper Functions ---
 def extract_text_from_word(file):
     doc = Document(file)
     return "\n".join([para.text for para in doc.paragraphs])
 
-# --- Resume Analyzer ---
+# Resume Analyzer
 if menu == "Resume Analyzer":
     st.header("📄 Resume Analyzer")
     uploaded_file = st.file_uploader("Upload your resume (.txt, .docx)", type=["txt", "docx"])
@@ -84,7 +76,7 @@ if menu == "Resume Analyzer":
         st.progress(score)
         st.info(f"Match Score: {score}%")
 
-# --- Mock Interview ---
+# Mock Interview
 elif menu == "Mock Interview":
     st.header("🎤 Mock Interview Bot")
     job_role = st.text_input("Target Job Role")
@@ -99,7 +91,7 @@ elif menu == "Mock Interview":
             except Exception as e:
                 st.error(f"Cohere API error: {e}")
 
-# --- Career Planner ---
+# Career Planner
 elif menu == "Career Planner":
     st.header("🧭 Career Planner")
     interest = st.text_input("What are your interests?")
@@ -119,7 +111,7 @@ elif menu == "Career Planner":
             except Exception as e:
                 st.error(f"Cohere API error: {e}")
 
-# --- Resources Hub ---
+# Resources Hub
 elif menu == "Resources Hub":
     st.header("📚 Career Resources Hub")
     topic = st.text_input("Enter Topic")
@@ -152,7 +144,7 @@ elif menu == "Resources Hub":
             except Exception as e:
                 st.error(f"Cohere API error: {e}")
 
-# --- Job Tracker ---
+# Job Tracker
 elif menu == "Job Search Tracker":
     st.header("📋 Job Search Tracker")
     if "job_data" not in st.session_state:
@@ -169,7 +161,7 @@ elif menu == "Job Search Tracker":
     if st.session_state.job_data:
         st.dataframe(pd.DataFrame(st.session_state.job_data))
 
-# --- Counseling Chatbot ---
+# Career Counseling Chatbot
 elif menu == "Career Counseling Chatbot":
     st.header("🧠 Career Counseling Chatbot")
     if "chat_history" not in st.session_state:
